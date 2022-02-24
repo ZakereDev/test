@@ -1,0 +1,181 @@
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+
+<h1>GESTION UTILISATEUR</h1>
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <a class="navbar-brand" style="color:white;">Employee Manager</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
+  <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarColor02">
+     <ul class="navbar-nav mr-auto">
+        <li class="nav-item active">
+           <a class="nav-link" (click)="onOpenModal(null, 'add')">Ajouter un utilisateur<span class="sr-only">(current)</span></a>
+        </li>
+     </ul>
+     <form class="form-inline my-2 my-lg-0">
+        <input type="search" (ngModelChange)="searchUtilisateurs(key.value)" #key="ngModel" ngModel
+         name="key" id="searchName" class="form-control mr-sm-2" placeholder="Rechercher un utilisateur..." required>
+     </form>
+  </div>
+</nav>
+
+
+<!-- MAIN  COMMENT-->
+<div class="container">
+  <div class="row">
+      <div *ngFor="let utilisateur of utilisateurs" class="col-md-6 col-xl-3">
+          <div class="card m-b-30">
+              <div class="card-body row">
+                  <div class="col-6">
+                      <a href=""><img src="{{utilisateur?.profilePicture}}" alt="" class="img-fluid rounded-circle w-60"></a>
+                  </div>
+                  <div class="col-6 card-title align-self-center mb-0">
+                      <h5>{{utilisateur?.nom}}</h5>
+                      <p class="m-0">{{utilisateur?.role}}</p>
+                  </div>
+              </div>
+              <ul class="list-group list-group-flush">
+                  <li class="list-group-item"><i class="fa fa-envelope float-right"></i>Email : <a href="#">{{utilisateur?.email}}</a></li>
+                  <li class="list-group-item"><i class="fa fa-phone float-right"></i>Tel : {{utilisateur?.tel}}</li>
+              </ul>
+              <div class="card-body">
+                  <div class="float-right btn-group btn-group-sm">
+                      <a (click)="onOpenModal(utilisateur ,'edit')" class="btn btn-primary tooltips" data-placement="top" data-toggle="modal" data-original-title="Edit" data-target="#modifyModal"><i class="fa fa-pencil"></i> </a>
+                      <a (click)="onOpenModal(utilisateur ,'delete')" class="btn btn-secondary tooltips" data-placement="top" data-toggle="modal" data-original-title="Delete" data-target="#deleteModal"><i class="fa fa-times"></i></a>
+                  </div>
+              </div>
+          </div>
+      </div>  
+      
+  </div>
+</div>
+
+
+<!--modify  Modal -->
+<div class="modal fade" id="modifyModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">modifyModal</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form #editForm="ngForm">
+         
+          <div class="form-group">
+            <label for="nom">nom</label>
+            <input type="text" ngModel="{{editUtilisateur?.nom}}" name="nom" class="form-control" id="nom" placeholders="nom" required >
+          </div> 
+          <div class="form-group">
+            <label for="prenom">prenom</label>
+            <input type="text" ngModel="{{editUtilisateur?.prenom}}" name="prenom" class="form-control" id="prenom" placeholders="prenom" required >
+          </div>
+          <div class="form-group">
+            <label for="password">password</label>
+            <input type="text" ngModel="{{editUtilisateur?.password}}" name="password" class="form-control" id="password" placeholders="password" required >
+          </div>
+          <input type="hidden" ngModel="{{editUtilisateur?.id}}" name="id" class="form-control" id="id" placeholder="id" required>
+          <input type="hidden" ngModel="{{editUtilisateur?.username}}" name="username" class="form-control" id="username" placeholder="username" required>
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input type="text" ngModel="{{editUtilisateur?.email}}" name="email" class="form-control" id="email" placeholders="Email" >
+          </div>
+          <div class="form-group">
+            <label for="role">role</label>
+            <input type="text" ngModel="{{editUtilisateur?.role}}" name="role" class="form-control" id="role" placeholders="role" >
+          </div>
+          <div class="form-group">
+            <label for="tel">tel</label>
+            <input type="text" ngModel="{{editUtilisateur?.tel}}" name="tel" class="form-control" id="tel" placeholders="tel" >
+          </div>
+          <div class="form-group">
+            <label for="profilePicture">profilePicture</label>
+            <input type="text" ngModel="{{editUtilisateur?.profilePicture}}" name="profilePicture" class="form-control" id="profilePicture" placeholders="profilePicture" >
+          </div>
+        
+        <div class="modal-footer">
+          <button type="button" id="add-utilisateur-form" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+          <button (click)="onUpdateModal(editForm.value)" [disabled]="editForm.invalid" class="btn btn-primary">Confimer les changements</button>
+        </div>
+      </form>
+    </div>
+    </div>
+  </div>
+</div>
+
+
+
+<!--del Modal -->
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Sup Modal</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        Voulez vous suprimer l'utilisateur {{deleteUtilisateur?.nom}} ? 
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+        <button (click)="onDeleteModal(deleteUtilisateur?.id)" type="button" class="btn btn-primary">Confimer les changements</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--add Modal -->
+<div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Add Modal</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form #addForm="ngForm" (ngSubmit)="onAddModal(addForm)" >
+          <div class="form-group">
+            <label for="username">username</label>
+            <input type="text" ngModel name="username" class="form-control" id="username" placeholders="username" required >
+          </div>
+          <div class="form-group">
+            <label for="name">name</label>
+            <input type="text" ngModel name="nom" class="form-control" id="nom" placeholders="Nom" required >
+          </div>
+          <div class="form-group">
+            <label for="prenom">prenom</label>
+            <input type="text" ngModel name="prenom" class="form-control" id="prenom" placeholders="Prenom" required >
+          </div>
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input type="text" ngModel name="email" class="form-control" id="email" placeholders="Email" required >
+          </div>
+          <div class="form-group">
+            <label for="phone">Tel</label>
+            <input type="text" ngModel name="tel" class="form-control" id="tel" placeholders="Tel" required >
+          </div>
+          <div class="form-group">
+            <label for="role">Role</label>
+            <input type="text" ngModel name="role" class="form-control" id="role" placeholders="role" required >
+          </div>
+          <div class="form-group">
+            <label for="profilePicture">imageUrl</label>
+            <input type="text" ngModel name="profilePicture" class="form-control" id="profilePicture" placeholders="profilePicture" required >
+          </div>
+        
+        <div class="modal-footer">
+          <button type="button" id="add-employee-form" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+          <button [disabled]="addForm.invalid" type="submit" class="btn btn-primary">Confimer les changements</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
