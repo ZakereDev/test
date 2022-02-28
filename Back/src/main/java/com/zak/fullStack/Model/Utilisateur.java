@@ -21,6 +21,7 @@ public class Utilisateur {
 
     @Column(unique = true)
     @NotEmpty(message = "Nom d'utilisateur obligatoire")
+
     private String username;
 
     @Column

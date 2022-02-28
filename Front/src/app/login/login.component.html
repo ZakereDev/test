@@ -25,22 +25,31 @@
     <div class="background"></div>
   </div>
  
-  <form id="accesspanel" action="">
-    <h1 id="litheader"></h1>
+
+  <form #logForm="ngForm" (ngSubmit)="onLogin(logForm)" >
+  <h1 id="litheader"></h1>
     <div class="inset">
-      <p>
-        <input type="text" name="username" [(ngModel)]="username" id="email" placeholder="username">
-      </p>
-      <p>
-        <input type="password" name="password" [(ngModel)]="password" id="password" placeholder="password">
-      </p>
+      <div class="form-group">
+        <label for="username">username</label>
+        <input type="text" ngModel name="username" class="form-control" id="username" placeholders="username" required >
+      </div>
+      <div class="form-group">
+        <label for="password">password</label>
+        <input type="password" ngModel name="password" class="form-control" id="password" placeholders="password" required >
+      </div>
+      
+      
+
     </div>
-    <p class="p-container">
-      <input type="submit" name="Login" id="go" value="Login" (click)="doLogin()">
-    </p>
+    <div class="modal-footer">
+      <button type="button" id="add-employee-form" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+      <button [disabled]="logForm.invalid" type="submit" class="btn btn-primary">Confimer les changements</button>
+    </div>
   </form>
+
+
+
     </div>
-<p class="botto-text"> Designed by Sunil Rajput</p>
 </div>
 
 

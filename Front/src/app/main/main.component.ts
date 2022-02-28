@@ -18,6 +18,7 @@ export class MainComponent {
   public utilisateurs!:Utilisateur[];
   public editUtilisateur!:Utilisateur;
   public deleteUtilisateur!:Utilisateur;
+  
 
   constructor(private utilisateurService:UtilisateurService,private service:RestApiService){}
 
@@ -38,7 +39,6 @@ export class MainComponent {
       },
       (error:HttpErrorResponse)=>{
         alert(error.message);
-        alert("TEST")
         
       }
       )
@@ -72,7 +72,10 @@ export class MainComponent {
     button.type ='button';
     button.style.display='none'; 
     button.setAttribute('data-toggle','modal');
-    if(mode ==='add'){ button.setAttribute('data-target' , '#addEmployeeModal')}
+
+    if(mode ==='add'){
+       button.setAttribute('data-target' , '#addEmployeeModal')
+      }
     if(mode ==='edit' && utilisateur){ 
       this.editUtilisateur=utilisateur
       button.setAttribute('data-target' , '#editEmployeeModal')}
@@ -99,6 +102,7 @@ export class MainComponent {
 
 
   onUpdateModal(utilisateur:Utilisateur):void{
+    alert(utilisateur.id)
     this.utilisateurService.updateUtilisateur(utilisateur).subscribe(
       (response : Utilisateur)=>{
         console.log(response)
@@ -124,6 +128,6 @@ export class MainComponent {
     )
     
   }
-
 }
+
 }

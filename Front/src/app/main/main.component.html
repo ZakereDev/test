@@ -11,7 +11,7 @@
   <div class="collapse navbar-collapse" id="navbarColor02">
      <ul class="navbar-nav mr-auto">
         <li class="nav-item active">
-           <a class="nav-link" (click)="onOpenModal(null, 'add')">Ajouter un utilisateur<span class="sr-only">(current)</span></a>
+           <a (click)="onOpenModal(null ,'add')" class="btn btn-primary tooltips" data-placement="top" data-toggle="modal" data-original-title="Add" data-target="#addModal">Ajouter un utilisateur</a>
         </li>
      </ul>
      <form class="form-inline my-2 my-lg-0">
@@ -22,7 +22,7 @@
 </nav>
 
 
-<!-- MAIN  COMMENT-->
+<!-- MAIN  -->
 <div class="container">
   <div class="row">
       <div *ngFor="let utilisateur of utilisateurs" class="col-md-6 col-xl-3">
@@ -32,7 +32,7 @@
                       <a href=""><img src="{{utilisateur?.profilePicture}}" alt="" class="img-fluid rounded-circle w-60"></a>
                   </div>
                   <div class="col-6 card-title align-self-center mb-0">
-                      <h5>{{utilisateur?.nom}}</h5>
+                      <h5>{{utilisateur?.username}}</h5>
                       <p class="m-0">{{utilisateur?.role}}</p>
                   </div>
               </div>
@@ -70,6 +70,10 @@
             <label for="nom">nom</label>
             <input type="text" ngModel="{{editUtilisateur?.nom}}" name="nom" class="form-control" id="nom" placeholders="nom" required >
           </div> 
+          <input type="hidden" ngModel="{{editUtilisateur?.id}}" name="id" class="form-control" id="id" placeholder="id" required>
+          <input type="hidden" ngModel="{{editUtilisateur?.username}}" name="username" class="form-control" id="username" placeholder="username" required>
+          <input type="hidden" ngModel="{{editUtilisateur?.id}}" name="id" class="form-control" id="id" placeholder="id" required>
+          <input type="hidden" ngModel="{{editUtilisateur?.username}}" name="username" class="form-control" id="username" placeholder="username" required>
           <div class="form-group">
             <label for="prenom">prenom</label>
             <input type="text" ngModel="{{editUtilisateur?.prenom}}" name="prenom" class="form-control" id="prenom" placeholders="prenom" required >
@@ -78,8 +82,6 @@
             <label for="password">password</label>
             <input type="text" ngModel="{{editUtilisateur?.password}}" name="password" class="form-control" id="password" placeholders="password" required >
           </div>
-          <input type="hidden" ngModel="{{editUtilisateur?.id}}" name="id" class="form-control" id="id" placeholder="id" required>
-          <input type="hidden" ngModel="{{editUtilisateur?.username}}" name="username" class="form-control" id="username" placeholder="username" required>
           <div class="form-group">
             <label for="email">Email</label>
             <input type="text" ngModel="{{editUtilisateur?.email}}" name="email" class="form-control" id="email" placeholders="Email" >
@@ -145,6 +147,10 @@
           <div class="form-group">
             <label for="username">username</label>
             <input type="text" ngModel name="username" class="form-control" id="username" placeholders="username" required >
+          </div>
+          <div class="form-group">
+            <label for="password">password</label>
+            <input type="text" ngModel name="password" class="form-control" id="password" placeholders="password" required >
           </div>
           <div class="form-group">
             <label for="name">name</label>

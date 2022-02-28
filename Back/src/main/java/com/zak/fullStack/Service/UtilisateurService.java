@@ -25,6 +25,10 @@ public class UtilisateurService {
         return utilisateurRepository.findById(id).get();
     }
 
+    public Utilisateur getUtilisateurByUsername(String username){
+        return utilisateurRepository.findByUsername(username);
+    }
+
     public Utilisateur setRoleById(int id , String role){
         Utilisateur utilisateur =utilisateurRepository.findById(id).get();
         utilisateur.setRole(role);
@@ -32,8 +36,9 @@ public class UtilisateurService {
         return utilisateur;
     }
 
-    public void deleteUtilisateurById(int id){
+    public boolean deleteUtilisateurById(int id){
         utilisateurRepository.deleteById(id);
+        return Boolean.TRUE;
     }
 
     public Utilisateur changeNom(String nom ,int id){
@@ -64,6 +69,11 @@ public class UtilisateurService {
         utilisateurRepository.save(utilisateur);
         return utilisateur;
 
+    }
+
+    public Utilisateur create(Utilisateur utilisateur) {
+
+        return utilisateurRepository.save(utilisateur);
     }
 
 
